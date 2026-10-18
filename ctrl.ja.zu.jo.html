@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>ctrl.jo.jo — Joystick H/B/T BENCH SYSTEM</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#02060a;color:#c8f7ff;font:11px/1.5 'JetBrains Mono',monospace;min-height:100vh}
+.app{max-width:1100px;margin:0 auto;padding:14px}
+.card{border:1px solid #132847;border-radius:10px;background:rgba(8,20,37,0.9);padding:12px;margin-bottom:10px}
+.hd{font-size:10px;letter-spacing:0.16em;color:#4a6a80;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between}
+.badge{padding:2px 8px;border-radius:999px;border:1px solid #1a3458;font-size:9px}
+.badge.gold{color:#ffd700;background:rgba(255,215,0,0.08)}
+.badge.cyan{color:#00ccff;background:rgba(0,204,255,0.08)}
+.joystick{width:180px;height:180px;border:1px solid #132847;border-radius:50%;background:radial-gradient(circle at 50% 50%,#0a1d34,#02060a);position:relative;margin:0 auto;touch-action:none}
+.stick{position:absolute;width:36px;height:36px;border-radius:50%;background:#ffd700;border:2px solid #000;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 20px rgba(255,215,0,0.4);cursor:grab}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.code{background:#000;border:1px solid #10233e;border-radius:8px;padding:10px;font-size:10px;color:#5a7aa0;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="card" style="border-color:rgba(255,215,0,0.3)">
+<div class="hd"><span>ctrl.jo.jo — Joystick Control · c=BENCH Ctrl=SYSTEMSTEUERUNG · H/B/T einhaltend</span><span id="status">JO: idle</span></div>
+<div class="grid">
+<div>
+<div class="joystick" id="joy"><div class="stick" id="stick"></div></div>
+<div style="display:flex;gap:6px;justify-content:center;margin-top:8px">
+<button id="benchBtn" class="badge gold">c = BENCH</button>
+<button id="sysBtn" class="badge cyan">Ctrl = SYSTEM</button>
+<button id="gamepadBtn" class="badge" style="color:#39ff88">Gamepad: warten</button>
+</div>
+<div style="margin-top:8px;font-size:9px;color:#4a6a80">Drag im Kreis = H/B/T · Joystick Achsen = Breite/Höhe/Tiefe · Buttons = BENCH/SYSTEM · chain 0⊃3⊃9⊃81⊃729</div>
+</div>
+<div>
+<div class="card" style="margin:0">
+<div class="hd"><span>KOORDINATOR · JO -> H/B/T</span><span id="hbt">H5 B5 T5</span></div>
+<div id="perm" style="font-size:16px;font-weight:800;color:#ffd700">HBT</div>
+<div id="chain" style="font-size:10px;color:#5a7aa0;margin-top:4px">0⊃3⊃9⊃81⊃729</div>
+<div style="margin-top:8px;display:flex;gap:6px">
+<span class="badge gold" id="vol">vol 125</span>
+<span class="badge cyan" id="res">Resonanz 0%</span>
+<span class="badge" id="sat">SAT 0°</span>
+</div>
+</div>
+<div class="card" style="margin-top:8px">
+<div class="hd"><span>EVENTS · ereignisieren statt rauswerfen</span></div>
+<div id="log" style="height:120px;overflow:auto;font-size:10px;color:#7aa0c6"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="hd"><span>ctrl.jo.jo.js — Code · HTML oder was?</span><span>iki1uc/our.ctrl</span></div>
+<div class="code">import { jo } from './ctrl.jo.jo.js';
+// H/B/T aus Joystick
+jo.bindCtrlJoJo({
+  onBench: ()=> openWindow('hardware'), // c = BENCH = hardware.nutzbar.html
+  onSystem: ()=> openWindow('control'), // Ctrl = SYSTEMSTEUERUNG = system.js + id.html
+  onHBT: (hbt, perm)=> {
+    console.log(`JO: H${hbt.höhe} B${hbt.breite} T${hbt.tiefe} ${perm} vol ${hbt.vol}`);
+    // chain = 0⊃3⊃9⊃81⊃729 * höhe
+    // SAT = chain Orbits
+    // Wetter = ECHO HALL REHALL
+  }
+});
+// Events: ereignisieren
+window.addEventListener('our_ctrl_bench', ()=>{/* BENCH */});
+window.addEventListener('our_ctrl_system', ()=>{/* SYSTEMSTEUERUNG */});
+window.addEventListener('our_ctrl_hbt', (e)=>{
+  const { hbt, perm, chain } = e.detail;
+  // H/B/T einhaltend, nur Reihenfolge drehen = Permutation
+});
+// Gamepad: Achsen = H/B/T, Buttons 0/1 = BENCH/SYSTEM
+// Joystick: Drag = H/B/T, Resonanz = sin(H)*cos(B)*sin(T)</div>
+</div>
+</div>
+<script type="module">
+import { jo } from './ctrl.jo.jo.js';
+const joy=document.getElementById('joy');
+const stick=document.getElementById('stick');
+const logEl=document.getElementById('log');
+let H=5,B=5,T=5, perm='HBT';
+let dragging=false;
+function log(m){
+  const d=document.createElement('div');
+  d.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;
+  logEl.prepend(d);
+}
+function update(x,y){
+  // x,y -1..1
+  const hbt=jo.joStickToHBT(x,y, (x+y)/2);
+  const p=jo.joDirectionToPerm(x,y);
+  H=hbt.höhe; B=hbt.breite; T=hbt.tiefe; perm=p;
+  document.getElementById('hbt').textContent=`H${H} B${B} T${T}`;
+  document.getElementById('perm').textContent=perm;
+  document.getElementById('chain').textContent=jo.JO.chain.map(v=>v*H).join('⊃');
+  document.getElementById('vol').textContent=`vol ${H*B*T}`;
+  document.getElementById('res').textContent=`Resonanz ${jo.resonance(H,B,T,Date.now()*0.001).toFixed(1)}%`;
+  document.getElementById('sat').textContent=`SAT ${jo.JO.chain[2]*H}°`;
+  window.dispatchEvent(new CustomEvent('our_ctrl_hbt',{detail:{hbt:{höhe:H,breite:B,tiefe:T,vol:H*B*T},perm,chain:jo.JO.chain.map(v=>v*H)}}));
+}
+function setStick(clientX,clientY){
+  const r=joy.getBoundingClientRect();
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  let x=(clientX-cx)/(r.width/2), y=(clientY-cy)/(r.height/2);
+  const len=Math.hypot(x,y); if(len>1){ x/=len; y/=len; }
+  stick.style.left=`calc(50% + ${x*(r.width/2-18)}px)`; stick.style.top=`calc(50% + ${y*(r.height/2-18)}px)`;
+  stick.style.transform='translate(-50%,-50%)';
+  update(x,y);
+}
+joy.addEventListener('pointerdown', e=>{ dragging=true; joy.setPointerCapture(e.pointerId); setStick(e.clientX,e.clientY); });
+joy.addEventListener('pointermove', e=>{ if(!dragging) return; setStick(e.clientX,e.clientY); });
+joy.addEventListener('pointerup', e=>{ dragging=false; stick.style.left='50%'; stick.style.top='50%'; });
+document.getElementById('benchBtn').addEventListener('click', ()=>{
+  window.dispatchEvent(new CustomEvent('our_ctrl_bench')); log('BENCH event via c — hardware.nutzbar.html + raid + sli');
+});
+document.getElementById('sysBtn').addEventListener('click', ()=>{
+  window.dispatchEvent(new CustomEvent('our_ctrl_system')); log('SYSTEMSTEUERUNG event via Ctrl — system.js + id.html + control H/B/T');
+});
+jo.bindCtrlJoJo({
+  onBench: ()=> log('→ BENCH: c gedrückt — TEST-BENCH offen (vol '+H*B*T+')'),
+  onSystem: ()=> log('→ SYSTEMSTEUERUNG: Ctrl gedrückt — SYSTEM offen (ROOT CLOSED 93/716)'),
+  onHBT: (hbt,p)=> log(`→ JO: H${hbt.höhe} B${hbt.breite} T${hbt.tiefe} ${p} chain ${jo.JO.chain.map(v=>v*hbt.höhe).join('⊃')}`)
+});
+window.addEventListener('our_ctrl_bench', ()=> document.getElementById('benchBtn').style.boxShadow='0 0 12px #ffd700');
+window.addEventListener('our_ctrl_system', ()=> document.getElementById('sysBtn').style.boxShadow='0 0 12px #00ccff');
+// Gamepad status
+setInterval(()=>{
+  const pads=navigator.getGamepads?.(); let connected=false;
+  if(pads){ for(const p of pads) if(p) connected=true; }
+  document.getElementById('gamepadBtn').textContent=connected?'Gamepad: aktiv':'Gamepad: warten';
+  document.getElementById('status').textContent=connected?`JO: ${pads[0]?.id.slice(0,24)}`:'JO: idle — Drag im Kreis oder Gamepad anschließen';
+},1000);
+log('ctrl.jo.jo.js geladen — c=BENCH Ctrl=SYSTEM — H/B/T einhaltend — ereignisieren statt rauswerfen');
+log('Joystick: Drag im Kreis = H/B/T · Gamepad: Achsen = H/B/T · Buttons 0/1 = BENCH/SYSTEM');
+</script>
+</body>
+</html>
