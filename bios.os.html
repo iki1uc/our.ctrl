@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>our.ctrl · H/B/T · 6 Permutationen · BIO OS BIOS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--bg:#02060a;--fg:#c8f7ff;--dim:#4a6a80;--faint:#1a2c3a;--gold:#ffd700;--cyan:#00ccff;--lime:#39ff88;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--fg);font:12px/1.6 var(--mono);min-height:100vh}
+.app{max-width:1100px;margin:0 auto;padding:16px}
+.card{border:1px solid var(--faint);border-radius:12px;background:rgba(8,15,22,0.9);overflow:hidden;margin-bottom:12px}
+.card-hd{padding:10px 14px;background:rgba(5,12,18,0.8);border-bottom:1px solid var(--faint);font-size:10px;letter-spacing:0.2em;color:var(--dim);text-transform:uppercase}
+.card-bd{padding:14px}
+.table{width:100%;border-collapse:collapse;font-size:11px}
+.table th{font-size:9px;color:var(--faint);text-align:left;padding:6px 8px;border-bottom:1px solid var(--faint)}
+.table td{padding:8px;border-bottom:1px dotted #0d1a24}
+.badge{padding:2px 8px;border-radius:999px;border:1px solid var(--faint);font-size:9px}
+.badge.bio{color:var(--lime);border-color:rgba(57,255,136,0.3);background:rgba(57,255,136,0.08)}
+.badge.os{color:var(--cyan);border-color:rgba(0,204,255,0.3);background:rgba(0,204,255,0.08)}
+.badge.bios{color:var(--gold);border-color:rgba(255,215,0,0.3);background:rgba(255,215,0,0.08)}
+.code{background:#000;border:1px solid var(--faint);border-radius:8px;padding:10px;font-size:11px;color:var(--dim);white-space:pre-wrap}
+.btn{padding:8px 14px;border-radius:8px;border:1px solid var(--faint);background:transparent;color:var(--dim);font:inherit;font-size:11px;cursor:pointer}
+.btn.on{background:var(--gold);color:#000;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="card" style="border-color:rgba(255,215,0,0.3)">
+<div class="card-hd"><span>our.ctrl · H/B/T · 6 Permutationen · README: einer macht BIO der andere OS · laufenden BIOS zum OS</span></div>
+<div class="card-bd">
+<div style="font-size:11px;line-height:1.6">
+<b>6 Permutationen = 3! = Würfel = Höhe Breite Tiefe einhaltend</b><br>
+Deine Files: höhe.breite.tiefe.html, breite.höhe.tiefe.html, tiefe.höhe.breite.html, tiefe.breite.höhe.html, breite.tiefe.höhe.html, höhe.tiefe.breite.html<br><br>
+<b>Regel:</b> H zuerst = BIO (Leben), B zuerst = OS (System ohne installieren), T zuerst = BIOS (Brücke die läuft)<br>
+<b>Auftrag:</b> laufenden BIOS (T vorne) zum OS drehen (B vorne) — H/B/T einhaltend, nur Reihenfolge drehen.
+</div>
+</div>
+</div>
+<div class="grid">
+<div class="card">
+<div class="card-hd"><span>6 PERMUTATIONEN · BIO / OS / BIOS</span><span id="count">6</span></div>
+<div class="card-bd" style="padding:0">
+<table class="table" id="permTable">
+<thead><tr><th>FILE</th><th>H/B/T</th><th>TYP</th><th>BIO/OS/BIOS</th></tr></thead>
+<tbody>
+<tr data-perm="H B T" data-typ="BIO"><td>höhe.breite.tiefe.html</td><td>H B T</td><td>Höhe zuerst</td><td><span class="badge bio">BIO = Leben = RAM ROM</span></td></tr>
+<tr data-perm="H T B" data-typ="BIO"><td>höhe.tiefe.breite.html</td><td>H T B</td><td>Höhe zuerst</td><td><span class="badge bio">BIO = Leben</span></td></tr>
+<tr data-perm="B H T" data-typ="OS"><td>breite.höhe.tiefe.html</td><td>B H T</td><td>Breite zuerst</td><td><span class="badge os">OS = System = ohne installieren</span></td></tr>
+<tr data-perm="B T H" data-typ="OS"><td>breite.tiefe.höhe.html</td><td>B T H</td><td>Breite zuerst</td><td><span class="badge os">OS = System</span></td></tr>
+<tr data-perm="T H B" data-typ="BIOS"><td>tiefe.höhe.breite.html</td><td>T H B</td><td>Tiefe zuerst</td><td><span class="badge bios">BIOS = Brücke = läuft = FLOW</span></td></tr>
+<tr data-perm="T B H" data-typ="BIOS"><td>tiefe.breite.höhe.html</td><td>T B H</td><td>Tiefe zuerst</td><td><span class="badge bios">BIOS = Brücke = läuft</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card" style="border-color:rgba(255,215,0,0.3)">
+<div class="card-hd"><span>LAUFENDEN BIOS ZUM OS · DREHEN</span><span>MAINBOARD REALITÄTEN geklärt</span></div>
+<div class="card-bd">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+<button class="btn on" data-action="biosToOs">BIOS -> OS drehen</button>
+<button class="btn" data-action="osToBio">OS -> BIO drehen</button>
+<button class="btn" data-action="bioToBios">BIO -> BIOS drehen</button>
+<button class="btn" id="export">EXPORT our.ctrl.js</button>
+</div>
+<div class="code" id="result">// laufenden BIOS zum OS = T vorne -> B vorne
+// H/B/T einhaltend
+function biosToOs(bios){
+  // BIOS = T H B oder T B H = Tiefe zuerst = Brücke läuft
+  // OS = B H T oder B T H = Breite zuerst = System ohne installieren
+  const map = {
+    'T H B': 'B H T', // tiefe.höhe.breite -> breite.höhe.tiefe
+    'T B H': 'B T H'  // tiefe.breite.höhe -> breite.tiefe.höhe
+  };
+  return map[bios] || bios;
+}
+biosToOs('T H B') = 'B H T' // tiefe.höhe.breite -> breite.höhe.tiefe = OS
+biosToOs('T B H') = 'B T H' // tiefe.breite.höhe -> breite.tiefe.höhe = OS
+// einer macht BIO (H vorne), der andere OS (B vorne)
+// laufenden BIOS (T vorne) zum OS (B vorne) = Würfel drehen, nicht skalieren
+</div>
+<div style="margin-top:10px;font-size:10px;color:var(--dim)">
+<b>MAIN MAINBOARD REALITÄTEN geklärt:</b><br>
+MAIN = Eingang Ausgang = PUSH PULL = H/B/T drehen<br>
+MAINBOARD = Würfel = 6 Seiten = 6 Permutationen = H/B/T einhaltend<br>
+REALITÄTEN = BIO (H vorne) = Leben, OS (B vorne) = System, BIOS (T vorne) = Brücke die läuft
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-hd"><span>CODE · city.line.js + würfel.js + pyramid.js Integration</span><span>Abkürzungen erlaubt wenn System erlaubt</span></div>
+<div class="card-bd">
+<div class="code">/* our.ctrl · H/B/T · 6 Permutationen */
+export const HBT = [
+  'H B T', // höhe.breite.tiefe = BIO
+  'H T B', // höhe.tiefe.breite = BIO
+  'B H T', // breite.höhe.tiefe = OS
+  'B T H', // breite.tiefe.höhe = OS
+  'T H B', // tiefe.höhe.breite = BIOS läuft
+  'T B H'  // tiefe.breite.höhe = BIOS läuft
+];
+export const TYP = {
+  'H B T': 'BIO', 'H T B': 'BIO',
+  'B H T': 'OS',  'B T H': 'OS',
+  'T H B': 'BIOS','T B H': 'BIOS'
+};
+// laufenden BIOS zum OS
+export function biosToOs(biosPerm){
+  const map = { 'T H B':'B H T', 'T B H':'B T H' };
+  return map[biosPerm] || biosPerm;
+}
+export function osToBio(osPerm){
+  const map = { 'B H T':'H B T', 'B T H':'H T B' };
+  return map[osPerm] || osPerm;
+}
+export function bioToBios(bioPerm){
+  const map = { 'H B T':'T B H', 'H T B':'T H B' };
+  return map[bioPerm] || bioPerm;
+}
+// Nutzung in city.line.js / line.js
+// city.line.js: CALL + RECALL = BIOS läuft -> OS drehen
+// würfel.js: Würfel drehen = H/B/T einhaltend
+// pyramid.js: permutation + apply = 3 ⊃ 9 ⊃ 81 = BIO
+// GPU separat als SCREEN Übersetzung, RAM ROM CPU CACHE extra
+// H/B/T einhaltend = Höhe Breite Tiefe bleiben, nur Reihenfolge drehen
+// ECHO HALL REHALL nutzend = 3D Audio für Würfel
+</div>
+</div>
+</div>
+</div>
+<script>
+const result = document.getElementById('result');
+document.querySelectorAll('[data-action]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('[data-action]').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    const act = btn.dataset.action;
+    if(act==='biosToOs'){
+      result.textContent = `// laufenden BIOS zum OS
+biosToOs('T H B') = 'B H T' // tiefe.höhe.breite -> breite.höhe.tiefe = OS
+biosToOs('T B H') = 'B T H' // tiefe.breite.höhe -> breite.tiefe.höhe = OS
+// Würfel drehen: T vorne -> B vorne = BIOS -> OS
+// H/B/T einhaltend, nur Reihenfolge drehen`;
+    } else if(act==='osToBio'){
+      result.textContent = `// OS zum BIO
+osToBio('B H T') = 'H B T' // breite.höhe.tiefe -> höhe.breite.tiefe = BIO
+osToBio('B T H') = 'H T B' // breite.tiefe.höhe -> höhe.tiefe.breite = BIO`;
+    } else {
+      result.textContent = `// BIO zum BIOS
+bioToBios('H B T') = 'T B H' // höhe.breite.tiefe -> tiefe.breite.höhe = BIOS läuft
+bioToBios('H T B') = 'T H B' // höhe.tiefe.breite -> tiefe.höhe.breite = BIOS läuft`;
+    }
+  });
+});
+document.getElementById('export').addEventListener('click', ()=>{
+  const js = `/* our.ctrl · H/B/T · 6 Permutationen · einer macht BIO der andere OS · laufenden BIOS zum OS */
+export const HBT = ['H B T','H T B','B H T','B T H','T H B','T B H'];
+export const TYP = {'H B T':'BIO','H T B':'BIO','B H T':'OS','B T H':'OS','T H B':'BIOS','T B H':'BIOS'};
+export function biosToOs(b){return {'T H B':'B H T','T B H':'B T H'}[b]||b}
+export function osToBio(b){return {'B H T':'H B T','B T H':'H T B'}[b]||b}
+export function bioToBios(b){return {'H B T':'T B H','H T B':'T H B'}[b]||b}
+// Nutzung: biosToOs('T H B') = 'B H T' = laufenden BIOS zum OS
+// H/B/T einhaltend · GPU separat als SCREEN Übersetzung · RAM ROM CPU CACHE extra
+`;
+  const blob = new Blob([js], {type:'application/javascript'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='our.ctrl.js'; a.click(); URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
